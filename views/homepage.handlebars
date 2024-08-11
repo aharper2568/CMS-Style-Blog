@@ -1,10 +1,24 @@
-{{#each users as |user| }}
-<div class="row align-center mb-5">
-  <div class="col-md-6">
-    <h2>{{{get_emoji}}} {{user.name}}</h2>
+<header class="display-flex justify-space-between align-center p-2">
+        <h1>Your Dashboard</h1>
+  
+        <nav>
+       
+        <a href="/new-post" class="btn border" id="newPostBtn">Create New Post</a>
+
+        </nav>
+    
+    </header>
+
+    {{#each posts as |post|}}
+<div class="row align-center mb-5 border border-info">
+ <a href="/{{post.id}}" class="link-offset-2 link-underline link-underline-opacity-0"> <div class="col-md-6">
+    <h2>{{post.title}}</h2>
   </div>
   <div class="col-md-6">
-    <h3><a href="mailto:{{user.email}}">{{user.email}}</a></h3>
-  </div>
+    <h3>{{post.content}}</h3>
+    <h4>made by {{post.user.name}}</h4>
+  </div></a>
 </div>
 {{/each}}
+
+
