@@ -1,7 +1,31 @@
 <header class="display-flex justify-space-between align-center p-2">
 
-  <h1>{{posts.title}}</h1>
 </header>
+<div class="border border-2 border-primary">
+
+  <h1>{{posts.title}}</h1>
   <p>{{posts.content}}</p>
   <h4>Posted by {{posts.user.name}}</h4>
+</div>
   <div><a href="/">Home</a></div>
+  <section class="border border-3 border-primary" id="comments-section">
+  <h3>Comments</h3>
+  {{#if posts.comments.length}}
+    {{#each posts.comments}}
+      <div class="comment">
+        <p>{{this.content}}</p>
+        <p>— {{this.user.name}}</p>
+      </div>
+    {{/each}}
+  {{else}}
+    <p>No comments yet. Be the first to comment!</p>
+  {{/if}}
+</section>
+  <h3>Leave a Comment</h3>
+<section id="new-comment-section" class="col col-md-2">
+  <form id="new-comment-form">
+    <textarea id="comment-content" rows="4" placeholder="Write your comment here..."></textarea>
+    <button type="submit" class="btn btn-info">Submit</button>
+  </form>
+</section>
+<script src="/js/single-post.js"></script>
