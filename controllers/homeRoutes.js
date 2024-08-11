@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Post } = require('../models');
+const { User, Post, Comment } = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', withAuth, async (req, res) => {
@@ -29,7 +29,7 @@ router.get('/new-post', withAuth, (req, res) => {
 router.get('/:id', withAuth, async (req, res) => {
   try {
     const postData = await Post.findByPk(req.params.id,{
-      include:[{model: User}]
+      include:[{model: User},{model: Comment, include:[{model: User}]}]
     });
 
     const posts = postData.get({ plain: true });
@@ -41,6 +41,21 @@ router.get('/:id', withAuth, async (req, res) => {
     });
   } catch (err) {
     res.status(500).json(err);
+  }
+});
+
+// Route to add a comment to a post
+router.post('/post/:id/comment', withAuth, async (req, res) => {
+  try {
+    const newComment = await Comment.create({
+      content: req.body.content,
+      post_id: req.params.id,
+      user_id: req.session.user_id,
+    });
+
+    res.status(200).json(newComment);
+  } catch (err) {
+    res.status(400).json(err);
   }
 });
 // Route to render the new post page
