@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Post</title>
+    <link rel="stylesheet" href="/css/jass.css">
+</head>
+<body>
+    <header class="display-flex justify-space-between align-center p-2">
+        <h1>Create New Post</h1>
+        {{#if logged_in}}
+        <nav>
+            <button class="btn" id="logout">Logout</button>
+        </nav>
+        {{/if}}
+    </header>
+    <main class="container container-fluid mt-5">
+        <form class="form new-post-form">
+            <div class="form-group">
+                <label for="post-title">Title:</label>
+                <input class="form-input" type="text" id="post-title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="post-content">Content:</label>
+                <textarea class="form-input" id="post-content" name="content" required></textarea>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">Create Post</button>
+            </div>
+        </form>
+    </main>
+
+    {{#if logged_in}}
+    <script src="/js/logout.js"></script>
+    {{/if}}
+    <script src="/js/new-post.js"></script>
+</body>
+</html>
