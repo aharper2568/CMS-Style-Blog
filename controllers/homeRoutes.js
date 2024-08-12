@@ -65,6 +65,27 @@ router.get('/new-post', withAuth, (req, res) => {
   });
 });
 
+// Route to delete a comment
+router.delete('/comment/:id', withAuth, async (req, res) => {
+  try {
+    const commentData = await Comment.destroy({
+      where: {
+        id: req.params.id,
+        user_id: req.session.user_id, //match comment to user id
+      },
+    });
+
+    if (!commentData) {
+      res.status(404).json({ message: 'No comment found with this id for the user' });
+      return;
+    }
+
+    res.status(200).json({ message: 'Comment deleted successfully' });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 
 
 // router.get('/newpost', withAuth, async (req, res) => {
