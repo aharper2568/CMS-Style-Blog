@@ -14,7 +14,7 @@
     {{#each posts.comments}}
       <div class="comment">
         <p>{{this.content}}</p>
-        <p>— {{this.user.name}}</p>
+        <p>— {{this.user.name}} <button class="btn delete-comment" data-id="{{posts.comments.post_id}}">Delete Comment</button></p>
       </div>
     {{/each}}
   {{else}}
