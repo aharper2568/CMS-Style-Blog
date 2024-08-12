@@ -1,4 +1,4 @@
-// public/js/single-post.js
+
 
 
 document.querySelector('#new-comment-form').addEventListener('submit', async (event) => {
