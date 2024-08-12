@@ -1,4 +1,6 @@
-const deleteCommentHandler = async (event) => {
+
+document.querySelector('.delete-comment')
+.addEventListener('click', async (event) => {
   if (event.target.hasAttribute('data-id')) {
     const id = event.target.getAttribute('data-id');
 
@@ -12,4 +14,4 @@ const deleteCommentHandler = async (event) => {
       alert('Failed to delete comment');
     }
   }
-};
+});
