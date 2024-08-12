@@ -26,7 +26,7 @@ router.get('/new-post', withAuth, (req, res) => {
   });
 });
 
-router.get('/:id', withAuth, async (req, res) => {
+router.get('/post/:id', withAuth, async (req, res) => {
   try {
     const postData = await Post.findByPk(req.params.id,{
       include:[{model: User},{model: Comment, include:[{model: User}]}]
@@ -86,17 +86,6 @@ router.delete('/comment/:id', withAuth, async (req, res) => {
   }
 });
 
-
-
-// router.get('/newpost', withAuth, async (req, res) => {
-//   try {
-// res.render('newpost', {
-//   loggedIn: req.session.loggedIn
-// })
-//   } catch (err) {
-//     res.status(500).json(err)
-//   }
-// })
 
 router.get('/register', (req, res) => {
   if (req.session.logged_in) {
