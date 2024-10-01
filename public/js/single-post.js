@@ -21,3 +21,24 @@ document.querySelector('#new-comment-form').addEventListener('submit', async (ev
     }
   }
 });
+
+const deletePostHandler = async (event) => {
+  if (event.target.classList.contains('delete-post')) {
+    const postId = window.location.pathname.split('/').pop();
+
+    const id = event.target.getAttribute('data-id');
+
+    const response = await fetch(`/api/post/${postId}`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok) {
+      document.location.replace('/'); // Redirect to homepage after deletion
+    } else {
+      alert('Failed to delete post');
+    }
+  }
+};
+
+// Attach the event listener to the document (event delegation)
+document.addEventListener('click', deletePostHandler);
