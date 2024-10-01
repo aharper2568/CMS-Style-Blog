@@ -19,6 +19,10 @@ Post.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    image_url: {
+      type: DataTypes.STRING, // Store the image URL or file path
+      allowNull: true,        // Optional, because not all posts might have images
+    },
     user_id: {
       type: DataTypes.INTEGER,
       references: {
