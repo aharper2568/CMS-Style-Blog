@@ -1,7 +1,20 @@
 const router = require('express').Router();
 const { User, Post } = require('../../models');
+const multer = require('multer');
+const path = require('path');
 
 const withAuth = require('../../utils/auth')
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/uploads');
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage: storage });
 
 router.get('/', async (req, res) => {
   try {
@@ -43,17 +56,20 @@ router.get('/:id', async (req, res) => {
     res.status(500).json(err);
   }
 });
-router.post('/', withAuth, async (req, res) => {
+router.post('/', upload.single('image'), async (req, res) => {
   try {
-      const newPost = await Post.create({
-          title: req.body.title,
-          content: req.body.content,
-          user_id: req.session.user_id,
-      });
+    const image_url = req.file ? `/uploads/${req.file.filename}` : null;
 
-      res.status(200).json(newPost);
+    const newPost = await Post.create({
+      title: req.body.title,
+      content: req.body.content,
+      image_url: image_url, // Store image URL in the database
+      user_id: req.session.user_id,
+    });
+
+    res.status(200).json(newPost);
   } catch (err) {
-      res.status(400).json(err);
+    res.status(400).json(err);
   }
 });
 router.put('/:id', async (req, res) => {
