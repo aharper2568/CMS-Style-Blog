@@ -11,6 +11,9 @@
   {{/if}}
 
   <h4>Posted by {{posts.user.name}}</h4>
+  {{#if (eq post.user.id ../req.session.user_id) }}
+  <button class="btn delete-post" data-id="{{this.id}}">Delete Post</button>
+{{/if}}
 </div>
 
 <div><a href="/">Home</a></div>
