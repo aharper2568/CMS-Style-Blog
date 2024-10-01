@@ -90,16 +90,17 @@ router.put('/:id', async (req, res) => {
     res.status(500).json(err);
   }
 });
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', withAuth, async (req, res) => {
   try {
     const postData = await Post.destroy({
       where: {
         id: req.params.id,
+        user_id: req.session.user_id, // Ensure that only the author can delete the post
       },
     });
 
     if (!postData) {
-      res.status(404).json({ message: 'No post found with this id!' });
+      res.status(404).json({ message: 'No post found with this id, or you are not authorized to delete it' });
       return;
     }
 
