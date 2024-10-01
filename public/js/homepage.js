@@ -15,3 +15,4 @@ document.querySelector('.delete-comment')
     }
   }
 });
+
